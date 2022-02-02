@@ -26,7 +26,7 @@ resource "aws_ecs_task_definition" "test" {
       }
     ],
     "cpu": 0,
-    "image": "246005639140.dkr.ecr.eu-central-1.amazonaws.com/standardjob:jenkins-test",
+    "image": "246005639140.dkr.ecr.eu-central-1.amazonaws.com/standardjob:${image_tag}",
     "name": "standardjob"
   }
 ]
