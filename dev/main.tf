@@ -1,38 +1,16 @@
-resource "aws_ecs_task_definition" "test" {
-  family                   = "test"
-  task_role_arn            = var.task_role
-  execution_role_arn       = var.task_role
-  requires_compatibilities = ["FARGATE"]
-  network_mode             = "awsvpc"
-  cpu                      = 256
-  memory                   = 512
-  container_definitions    = <<TASK_DEFINITION
-[
-  {
-   "logConfiguration": {
-      "logDriver": "awslogs",
-      "secretOptions": null,
-      "options": {
-        "awslogs-group": "/ecs/standardjob-task",
-        "awslogs-region": "eu-central-1",
-        "awslogs-stream-prefix": "ecs"
-      }
-    },
-    "portMappings": [
-      {
-        "hostPort": 3000,
-        "protocol": "tcp",
-        "containerPort": 3000
-      }
-    ],
-    "cpu": 0,
-    "image": "246005639140.dkr.ecr.eu-central-1.amazonaws.com/standardjob:${var.image_tag}",
-    "name": "standardjob"
-  }
-]
-TASK_DEFINITION
+module "task_definition" {
+  source = "../modules/task-definition"
 
-  runtime_platform {
-    operating_system_family = "LINUX"
-  }
+  provider_region = var.provider_region
+  aws_account_id = var.aws_account_id
+  task_definition_role = var.task_definition_role
+  task_definition_name = var.task_definition_name
+  requires_compatibilities = var.requires_compatibilities
+  cpu = var.cpu
+  memory = var.memory
+  container_cpu = var.container_cpu
+  port_mappings = var.port_mappings
+  environment_variables = var.environment_variables
+  docker_image_tag = var.docker_image_tag
+  docker_image_name = var.docker_image_name
 }
