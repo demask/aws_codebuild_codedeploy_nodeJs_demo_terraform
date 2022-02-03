@@ -1,7 +1,7 @@
 provider_region = "eu-central-1"
 aws_account_id = "246005639140"
 task_definition_role = "arn:aws:iam::246005639140:role/ecsTaskExecutionRole"
-task_definition_name = "standardjob"
+task_definition_name = "job1"
 requires_compatibilities = ["FARGATE"]
 cpu = 256
 memory = 512
@@ -14,4 +14,4 @@ port_mappings = [
       }
     ]
 environment_variables = null
-docker_image_name = "standardjob"
+docker_image_name = "job1"
