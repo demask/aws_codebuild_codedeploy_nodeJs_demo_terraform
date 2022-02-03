@@ -6,8 +6,8 @@ resource "aws_ecs_task_definition" "task_definition" {
   network_mode             = "awsvpc"
   cpu                      = var.cpu
   memory                   = var.memory
-  container_definitions    = <<TASK_DEFINITION
-[
+  container_definitions    = jsonencode([
+
   {
    "logConfiguration": {
       "logDriver": "awslogs",
@@ -17,14 +17,13 @@ resource "aws_ecs_task_definition" "task_definition" {
         "awslogs-stream-prefix": "ecs"
       }
     },
-    "portMappings": ${var.port_mappings},
-    "cpu": ${var.container_cpu},
-    "environment": ${var.environment_variables},
+    "portMappings": var.port_mappings,
+    "cpu": var.container_cpu,
+    "environment": var.environment_variables,
     "image": "${var.aws_account_id}.dkr.ecr.${var.provider_region}.amazonaws.com/${var.docker_image_name}:${var.docker_image_tag}",
     "name": "${var.docker_image_name}"
   }
-]
-TASK_DEFINITION
+])
 
   runtime_platform {
     operating_system_family = "LINUX"
