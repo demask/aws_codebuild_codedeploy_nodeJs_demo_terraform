@@ -64,28 +64,3 @@ variable "docker_image_name" {
   description = "Docker image name"
   type        = string
 }
-
-variable "container_definitions" {
-  description = "Container definitions"
-  type = list(object({
-    logDriver = string
-    options = object({
-      awslogs-group = string
-      awslogs-region = string
-      awslogs-stream-prefix = string
-    })
-    portMappings = list(object({
-      hostPort = number
-      containerPort = number
-      protocol = string
-    }))
-    cpu = number
-    environment = list(object({
-      name = string
-      value = string
-    }))
-    image = string
-    name = string
-  }))
-}
-

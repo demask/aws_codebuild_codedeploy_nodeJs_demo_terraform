@@ -13,5 +13,4 @@ module "task_definition" {
   environment_variables = var.environment_variables
   docker_image_tag = var.docker_image_tag
   docker_image_name = var.docker_image_name
-  container_definitions = var.container_definitions
 }
