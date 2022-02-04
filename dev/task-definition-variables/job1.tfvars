@@ -15,3 +15,4 @@ port_mappings = [
     ]
 environment_variables = null
 docker_image_name = "job1"
+container_definitions = "test"
