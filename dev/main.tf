@@ -10,7 +10,12 @@ module "task_definition" {
   memory = var.memory
   container_cpu = var.container_cpu
   port_mappings = var.port_mappings
-  environment_variables = var.environment_variables
+  environment_variables = [
+      {
+        "name": "varijabla",
+        "value": "tcp"
+      }
+    ]
   docker_image_tag = var.docker_image_tag
   docker_image_name = var.docker_image_name
 }
