@@ -64,3 +64,8 @@ variable "docker_image_name" {
   description = "Docker image name"
   type        = string
 }
+
+variable "container_definitions" {
+  description = "A list of container definitions"
+  default     = []
+}
