@@ -1,27 +1,33 @@
 module "task_definition" {
   source = "../modules/task-definition"
 
-  task_definition_role = var.task_definition_role
-  task_definition_name = var.task_definition_name
-  requires_compatibilities = var.requires_compatibilities
-  cpu = var.cpu
-  memory = var.memory
+  task_definition_role = "arn:aws:iam::246005639140:role/ecsTaskExecutionRole"
+  task_definition_name = "job1"
+  requires_compatibilities = ["FARGATE"]
+  cpu = 256
+  memory = 512
 
   container_definitions = [
   {
    "logConfiguration": {
       "logDriver": "awslogs",
       "options": {
-        "awslogs-group": "/ecs/${var.task_definition_name}",
-        "awslogs-region": "${var.provider_region}",
+        "awslogs-group": "/ecs/job1",
+        "awslogs-region": "eu-central-1",
         "awslogs-stream-prefix": "ecs"
       }
     },
-    "portMappings": var.port_mappings,
-    "cpu": var.container_cpu,
-    "environment": var.environment_variables,
-    "image": "${var.aws_account_id}.dkr.ecr.${var.provider_region}.amazonaws.com/${var.docker_image_name}:${var.docker_image_tag}",
-    "name": "${var.docker_image_name}"
+    "portMappings": [
+      {
+        "hostPort": 3000,
+        "protocol": "tcp",
+        "containerPort": 3000
+      }
+    ],
+    "cpu": 0,
+    "environment": null,
+    "image": "246005639140.dkr.ecr.eu-central-1.amazonaws.com/job1:${var.docker_image_tag}",
+    "name": "job1"
   }
 ]
 }
