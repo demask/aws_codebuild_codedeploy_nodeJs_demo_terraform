@@ -24,11 +24,6 @@ variable "memory" {
   type        = number
 }
 
-variable "docker_image_tag" {
-  description = "Docker image tag"
-  type        = string
-}
-
 variable "container_definitions" {
   description = "A list of container definitions"
   default     = []
