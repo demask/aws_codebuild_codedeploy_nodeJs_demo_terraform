@@ -1,12 +1,3 @@
-variable "provider_region" {
-  description = "Provider region"
-  type        = string
-}
-
-variable "aws_account_id" {
-  description = "AWS account id"
-  type        = string
-}
 
 variable "task_definition_role" {
   description = "ECS task execution role"
@@ -33,35 +24,8 @@ variable "memory" {
   type        = number
 }
 
-variable "container_cpu" {
-  description = "ECS task container cpu"
-  type        = number
-}
-
-variable "port_mappings" {
-  description = "ECS task container port mappings"
-  type = list(object({
-    hostPort = number
-    containerPort = number
-    protocol = string
-  }))
-}
-
-variable "environment_variables" {
-  description = "ECS task container environment variables"
-  type = list(object({
-    name = string
-    value = string
-  }))
-}
-
 variable "docker_image_tag" {
   description = "Docker image tag"
-  type        = string
-}
-
-variable "docker_image_name" {
-  description = "Docker image name"
   type        = string
 }
 
