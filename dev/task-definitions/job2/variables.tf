@@ -20,8 +20,3 @@ variable "docker_image_tag" {
   description = "Docker image tag"
   type        = string
 }
-
-variable "docker_image_tag_2" {
-  description = "Docker image tag"
-  type        = string
-}

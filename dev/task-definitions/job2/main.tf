@@ -47,7 +47,7 @@ module "task_definition" {
     ],
     "cpu": 0,
     "environment": null,
-    "image": "246005639140.dkr.ecr.eu-central-1.amazonaws.com/job2_2:${var.docker_image_tag_2}",
+    "image": "246005639140.dkr.ecr.eu-central-1.amazonaws.com/job2_2:${var.docker_image_tag}",
     "name": "job2_2"
   }
 ]
