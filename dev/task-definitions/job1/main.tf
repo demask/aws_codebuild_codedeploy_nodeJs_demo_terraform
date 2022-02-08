@@ -1,5 +1,5 @@
 module "task_definition" {
-  source = "../../modules/task-definition"
+  source = "../../../modules/task-definition"
 
   task_definition_role = "arn:aws:iam::246005639140:role/ecsTaskExecutionRole"
   task_definition_name = "job1"
