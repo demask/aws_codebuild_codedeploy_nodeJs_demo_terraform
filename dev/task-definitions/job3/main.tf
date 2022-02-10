@@ -19,9 +19,9 @@ module "task_definition" {
     },
     "portMappings": [
       {
-        "hostPort": 8033,
+        "hostPort": 8043,
         "protocol": "tcp",
-        "containerPort": 8033
+        "containerPort": 8043
       }
     ],
     "cpu": 0,
