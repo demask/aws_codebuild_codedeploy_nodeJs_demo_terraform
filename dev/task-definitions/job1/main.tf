@@ -32,3 +32,16 @@ module "task_definition" {
   }
 ]
 }
+
+module "service" {
+  source = "../../../modules/ecs-service"
+
+  name            = task_definition.task_definition_name
+  cluster         = "DEV"
+  task_definition = module.task_definition.arn
+  desired_count   = 1
+  launch_type     = "FARGATE"
+  platform_version = "LATEST"
+  deployment_minimum_healthy_percent = 100
+  deployment_maximum_percent = 200
+}
