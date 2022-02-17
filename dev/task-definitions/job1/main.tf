@@ -14,7 +14,8 @@ module "task_definition" {
       "options": {
         "awslogs-group": "/ecs/job1",
         "awslogs-region": "eu-central-1",
-        "awslogs-stream-prefix": "ecs"
+        "awslogs-stream-prefix": "ecs",
+        "awslogs-create-group": "true"
       }
     },
     "portMappings": [
