@@ -36,9 +36,9 @@ module "task_definition" {
 module "service" {
   source = "../../../modules/ecs-service"
 
-  name            = module.task_definition.task_definition_name
+  name            = "job1"
   cluster         = "DEV"
-  task_definition = module.task_definition.id
+  task_definition = module.task_definition.arn
   desired_count   = 1
   launch_type     = "FARGATE"
   platform_version = "LATEST"
