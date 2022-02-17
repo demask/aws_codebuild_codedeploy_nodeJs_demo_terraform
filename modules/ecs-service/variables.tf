@@ -28,11 +28,6 @@ variable "platform_version" {
   type        = string
 }
 
-variable "platform_version" {
-  description = "ECS service platform version"
-  type        = string
-}
-
 variable "deployment_minimum_healthy_percent" {
   description = "ECS service deployment minimum"
   type        = number
