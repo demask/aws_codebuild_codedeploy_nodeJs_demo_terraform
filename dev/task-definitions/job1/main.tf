@@ -44,10 +44,4 @@ module "service" {
   platform_version = "LATEST"
   deployment_minimum_healthy_percent = 100
   deployment_maximum_percent = 200
-
-  network_configuration {
-    assign_public_ip = true
-    subnets = var.subnets
-    security_groups = var.security_groups
-  }
 }
