@@ -53,5 +53,5 @@ variable "subnets" {
 variable "security_groups" {
   description = "ECS service security groups"
   type        = list(string)
-  default = ["subnet-03a64430c69f5fd34", "subnet-0a47d243cdad92853", "subnet-0a47d243cdad92853"]
+  default = ["sg-0180ca3dc1db6662f"]
 }
