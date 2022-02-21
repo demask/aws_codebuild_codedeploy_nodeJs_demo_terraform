@@ -52,3 +52,8 @@ variable "security_groups" {
   description = "ECS service security groups"
   type        = list(string)
 }
+
+variable "registry_arn" {
+  description = "ECS service registry arn"
+  type        = string
+}

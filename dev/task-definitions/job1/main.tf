@@ -46,7 +46,7 @@ resource "aws_service_discovery_service" "job1_discovery_service" {
   name = "job1"
 
   dns_config {
-    namespace_id = data.terraform_remote_state.service_discovery_namespace.discovery_namespace_id
+    namespace_id = data.terraform_remote_state.service_discovery_namespace.outputs.discovery_namespace_id
 
     dns_records {
       ttl  = 100
@@ -75,4 +75,6 @@ module "service" {
   assign_public_ip = true
   subnets = ["subnet-03a64430c69f5fd34", "subnet-0a47d243cdad92853", "subnet-0a47d243cdad92853"]
   security_groups = ["sg-0180ca3dc1db6662f"]
+  registry_arn = aws_service_discovery_service.job1_discovery_service.arn
+ 
 }

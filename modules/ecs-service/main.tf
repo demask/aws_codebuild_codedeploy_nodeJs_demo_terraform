@@ -13,4 +13,8 @@ resource "aws_ecs_service" "service" {
     subnets = var.subnets
     security_groups = var.security_groups
   }
+  
+  service_registries {
+  	registry_arn = var.registry_arn
+  }
 }
