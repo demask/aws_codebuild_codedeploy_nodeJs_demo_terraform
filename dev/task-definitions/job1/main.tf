@@ -1,6 +1,6 @@
 data "terraform_remote_state" "service_discovery_namespace" {
     backend = "s3"
-    config {
+    config = {
         bucket  = "terraform-demo-bucket-state-2022"
         key     = "dev/terraform_service_discovery_namespace.tfstate"
         region  = "eu-central-1"
