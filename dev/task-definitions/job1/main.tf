@@ -46,7 +46,7 @@ resource "aws_service_discovery_service" "job1_discovery_service" {
   name = "job1"
 
   dns_config {
-    namespace_id = terraform_remote_state.service_discovery_namespace.discovery_namespace_id
+    namespace_id = data.terraform_remote_state.service_discovery_namespace.discovery_namespace_id
 
     dns_records {
       ttl  = 100
