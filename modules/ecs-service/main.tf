@@ -14,13 +14,19 @@ resource "aws_ecs_service" "service" {
     security_groups = var.security_groups
   }
   
-  service_registries {
-  	registry_arn = var.registry_arn
+  dynamic "load_balancer" {
+    for_each = var.lb_target_groups
+    content {
+    	target_group_arn = load_balancer.value.target_group_arn
+  		container_name = load_balancer.value.container_name
+  		container_port = load_balancer.value.container_port
+    }
   }
-  
-  load_balancer {
-  	target_group_arn = var.target_group_arn
-  	container_name = var.container_name
-  	container_port = var.container_port
+
+  dynamic "service_registries" {
+    for_each = var.service_registries
+    content {
+      registry_arn = service_registries.value.registry_arn
+    }
   }
 }

@@ -53,22 +53,23 @@ variable "security_groups" {
   type        = list(string)
 }
 
-variable "registry_arn" {
-  description = "ECS service registry arn"
-  type        = string
+variable "lb_target_groups" {
+  description = "List of load balancer target group objects containing the lb_target_group_arn, container_port and container_health_check_port"
+  default     = []
+  type = list(
+    object({
+      container_port              = number
+      container_name 			  = string
+      target_group_arn         	  = string
+      }
+    )
+  )
 }
 
-variable "target_group_arn" {
-  description = "ECS service load balancer target group arn"
-  type        = string
-}
-
-variable "container_name" {
-  description = "ECS service load balancer container name"
-  type        = string
-}
-
-variable "container_port" {
-  description = "ECS service load balancer container port"
-  type        = number
+variable "service_registries" {
+  description = "List of service registry objects"
+  type = list(object({
+    registry_arn   = string
+  }))
+  default = []
 }
