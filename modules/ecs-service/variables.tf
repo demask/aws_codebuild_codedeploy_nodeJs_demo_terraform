@@ -57,3 +57,18 @@ variable "registry_arn" {
   description = "ECS service registry arn"
   type        = string
 }
+
+variable "target_group_arn" {
+  description = "ECS service load balancer target group arn"
+  type        = string
+}
+
+variable "container_name" {
+  description = "ECS service load balancer container name"
+  type        = string
+}
+
+variable "container_port" {
+  description = "ECS service load balancer container port"
+  type        = number
+}

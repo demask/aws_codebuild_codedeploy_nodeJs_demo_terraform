@@ -92,5 +92,8 @@ module "service" {
   subnets = data.aws_subnets.example.ids
   security_groups = [data.terraform_remote_state.dev_security_group.outputs.job1_sg]
   registry_arn = aws_service_discovery_service.job1_discovery_service.arn
+  target_group_arn = null
+  container_name = null
+  container_port = null
  
 }
