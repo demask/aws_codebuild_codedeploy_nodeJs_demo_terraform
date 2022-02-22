@@ -1,4 +1,4 @@
-data "aws_subnets" "example" {
+data "aws_subnets" "subnets" {
   filter {
     name   = "vpc-id"
     values = ["vpc-0c940bac15452202c"]
@@ -19,6 +19,15 @@ data "terraform_remote_state" "dev_security_group" {
     config = {
         bucket  = "terraform-demo-bucket-state-2022"
         key     = "dev/terraform_dev_sg.tfstate"
+        region  = "eu-central-1"
+    }
+}
+
+data "terraform_remote_state" "job1_lb" {
+    backend = "s3"
+    config = {
+        bucket  = "terraform-demo-bucket-state-2022"
+        key     = "dev/terraform_job1_lb.tfstate"
         region  = "eu-central-1"
     }
 }
@@ -89,13 +98,19 @@ module "service" {
   deployment_minimum_healthy_percent = 100
   deployment_maximum_percent = 200
   assign_public_ip = true
-  subnets = data.aws_subnets.example.ids
+  subnets = data.aws_subnets.subnets.ids
   security_groups = [data.terraform_remote_state.dev_security_group.outputs.job1_sg]
   service_registries = [
   	{
   		registry_arn = aws_service_discovery_service.job1_discovery_service.arn
   	}
   ]
-  lb_target_groups = []
+  lb_target_groups = [
+  	{
+  		target_group_arn=data.terraform_remote_state.job1_lb.outputs.job1_lb_tg_arn
+  		container_port=3000
+  		container_name="job1"
+  	}
+  ]
  
 }
