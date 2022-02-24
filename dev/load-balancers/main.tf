@@ -15,7 +15,7 @@ data "terraform_remote_state" "dev_security_group" {
 }
 
 resource "aws_alb_target_group" "alb_target_group" {  
-  name_prefix     = "job1tg"  
+  name_prefix     = "job1-"
   port     = 80  
   protocol = "HTTP"  
   target_type = "ip"
@@ -45,7 +45,7 @@ resource "aws_lb" "job1_lb" {
 
 resource "aws_alb_listener" "alb_listener" {  
   load_balancer_arn = aws_lb.job1_lb.arn  
-  port              = 3000  
+  port              = 80  
   protocol          = "HTTP"
   
   default_action {    
