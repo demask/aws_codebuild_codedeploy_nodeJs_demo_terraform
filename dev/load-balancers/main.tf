@@ -15,7 +15,7 @@ data "terraform_remote_state" "dev_security_group" {
 }
 
 resource "aws_alb_target_group" "alb_target_group" {  
-  name_prefix     = "job1-"
+  name     = "job1-lb-tg"
   port     = 80  
   protocol = "HTTP"  
   target_type = "ip"
