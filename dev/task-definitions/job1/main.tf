@@ -1,3 +1,37 @@
+data "aws_subnets" "subnets" {
+  filter {
+    name   = "vpc-id"
+    values = ["vpc-0c940bac15452202c"]
+  }
+}
+
+data "terraform_remote_state" "service_discovery_namespace" {
+    backend = "s3"
+    config = {
+        bucket  = "terraform-demo-bucket-state-2022"
+        key     = "dev/terraform_service_discovery_namespace.tfstate"
+        region  = "eu-central-1"
+    }
+}
+
+data "terraform_remote_state" "dev_security_group" {
+    backend = "s3"
+    config = {
+        bucket  = "terraform-demo-bucket-state-2022"
+        key     = "dev/terraform_dev_sg.tfstate"
+        region  = "eu-central-1"
+    }
+}
+
+data "terraform_remote_state" "job1_lb" {
+    backend = "s3"
+    config = {
+        bucket  = "terraform-demo-bucket-state-2022"
+        key     = "dev/terraform_job1_lb.tfstate"
+        region  = "eu-central-1"
+    }
+}
+
 module "task_definition" {
   source = "../../../modules/task-definition"
 
@@ -31,4 +65,52 @@ module "task_definition" {
     "name": "job1"
   }
 ]
+}
+
+resource "aws_service_discovery_service" "job1_discovery_service" {
+  name = "job1"
+
+  dns_config {
+    namespace_id = data.terraform_remote_state.service_discovery_namespace.outputs.discovery_namespace_id
+
+    dns_records {
+      ttl  = 100
+      type = "A"
+    }
+
+    routing_policy = "MULTIVALUE"
+  }
+
+  health_check_custom_config {
+    failure_threshold = 1
+  }
+}
+
+module "service" {
+  source = "../../../modules/ecs-service"
+
+  name            = "job1"
+  cluster         = "DEV"
+  task_definition = module.task_definition.arn
+  desired_count   = 1
+  launch_type     = "FARGATE"
+  platform_version = "LATEST"
+  deployment_minimum_healthy_percent = 100
+  deployment_maximum_percent = 200
+  assign_public_ip = true
+  subnets = data.aws_subnets.subnets.ids
+  security_groups = [data.terraform_remote_state.dev_security_group.outputs.job1_sg]
+  service_registries = [
+  	{
+  		registry_arn = aws_service_discovery_service.job1_discovery_service.arn
+  	}
+  ]
+  lb_target_groups = [
+  	{
+  		target_group_arn=data.terraform_remote_state.job1_lb.outputs.job1_lb_tg_arn
+  		container_port=3000
+  		container_name="job1"
+  	}
+  ]
+ 
 }
