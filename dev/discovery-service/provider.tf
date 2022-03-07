@@ -1,4 +1,4 @@
-erraform {
+terraform {
     backend "s3" {
       bucket         = "terraform-demo-bucket-state-2022"
       key            = "dev/terraform_discovery_service.tfstate"
