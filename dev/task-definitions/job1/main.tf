@@ -32,6 +32,15 @@ data "terraform_remote_state" "job1_lb" {
     }
 }
 
+data "terraform_remote_state" "service_discovery_service" {
+  backend = "s3"
+  config = {
+    bucket = "terraform-demo-bucket-state-2022"
+    key    = "dev/terraform_discovery_service.tfstate"
+    region = "eu-central-1"
+  }
+}
+
 module "task_definition" {
   source = "../../../modules/task-definition"
 
@@ -67,25 +76,6 @@ module "task_definition" {
 ]
 }
 
-resource "aws_service_discovery_service" "job1_discovery_service" {
-  name = "job1"
-
-  dns_config {
-    namespace_id = data.terraform_remote_state.service_discovery_namespace.outputs.discovery_namespace_id
-
-    dns_records {
-      ttl  = 100
-      type = "A"
-    }
-
-    routing_policy = "MULTIVALUE"
-  }
-
-  health_check_custom_config {
-    failure_threshold = 1
-  }
-}
-
 module "service" {
   source = "../../../modules/ecs-service"
 
@@ -102,7 +92,7 @@ module "service" {
   security_groups = [data.terraform_remote_state.dev_security_group.outputs.job1_sg]
   service_registries = [
   	{
-  		registry_arn = aws_service_discovery_service.job1_discovery_service.arn
+  		registry_arn = data.terraform_remote_state.service_discovery_service.outputs.job1_service_discovery_service_arn
   	}
   ]
   lb_target_groups = [
