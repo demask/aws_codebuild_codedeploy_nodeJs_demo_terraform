@@ -88,8 +88,6 @@ module "service" {
   deployment_minimum_healthy_percent = 100
   deployment_maximum_percent = 200
   assign_public_ip = true
-  force_new_deployment = true
-  
   subnets = data.aws_subnets.subnets.ids
   security_groups = [data.terraform_remote_state.dev_security_group.outputs.job1_sg]
   service_registries = [

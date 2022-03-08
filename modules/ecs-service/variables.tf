@@ -73,8 +73,3 @@ variable "service_registries" {
   }))
   default = []
 }
-
-variable "force_new_deployment" {
-  description = "ECS service force new deployment"
-  type        = bool
-}
