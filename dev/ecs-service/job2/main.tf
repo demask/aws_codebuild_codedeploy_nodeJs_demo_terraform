@@ -5,15 +5,6 @@ data "aws_subnets" "subnets" {
   }
 }
 
-data "terraform_remote_state" "service_discovery_namespace" {
-    backend = "s3"
-    config = {
-        bucket  = "terraform-demo-bucket-state-2022"
-        key     = "dev/terraform_service_discovery_namespace.tfstate"
-        region  = "eu-central-1"
-    }
-}
-
 data "terraform_remote_state" "dev_security_group" {
     backend = "s3"
     config = {
@@ -46,7 +37,7 @@ module "task_definition" {
    "logConfiguration": {
       "logDriver": "awslogs",
       "options": {
-        "awslogs-group": "/ecs/job2_1",
+        "awslogs-group": "/ecs/job2",
         "awslogs-region": "eu-central-1",
         "awslogs-stream-prefix": "ecs"
       }
@@ -67,7 +58,7 @@ module "task_definition" {
    "logConfiguration": {
       "logDriver": "awslogs",
       "options": {
-        "awslogs-group": "/ecs/job2_2",
+        "awslogs-group": "/ecs/job2",
         "awslogs-region": "eu-central-1",
         "awslogs-stream-prefix": "ecs",
         "awslogs-create-group": "true"

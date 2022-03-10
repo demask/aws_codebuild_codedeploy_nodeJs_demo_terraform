@@ -5,15 +5,6 @@ data "aws_subnets" "subnets" {
   }
 }
 
-data "terraform_remote_state" "service_discovery_namespace" {
-    backend = "s3"
-    config = {
-        bucket  = "terraform-demo-bucket-state-2022"
-        key     = "dev/terraform_service_discovery_namespace.tfstate"
-        region  = "eu-central-1"
-    }
-}
-
 data "terraform_remote_state" "dev_security_group" {
     backend = "s3"
     config = {
