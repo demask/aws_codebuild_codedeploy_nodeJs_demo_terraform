@@ -75,7 +75,7 @@ module "service" {
   
   service_registries = [
   	{
-  		registry_arn = data.terraform_remote_state.service_discovery_service.outputs.other_repo_job_discovery_service
+  		registry_arn = data.terraform_remote_state.service_discovery_service.outputs.other_repo_job_discovery_service_arn
   	}
   ]
 
